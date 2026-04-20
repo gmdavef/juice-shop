@@ -18,11 +18,11 @@ jobs:
           RL_TOKEN: ${{ secrets.RL_COMMUNITY_TOKEN }}
         with:        
           scan-path: package.json
+          scan-profile: baseline
           check-deps: release
           report: oss-safety-report.json
           log-file: rl-protect.log
           log-level: warning
-          verbose: true
 
       - name: Archive Report
         if: success() || failure()
