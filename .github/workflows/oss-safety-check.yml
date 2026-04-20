@@ -1,0 +1,34 @@
+name: OSS Safety Check via RL Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  OSS-Check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out 
+        uses: actions/checkout@v6
+        
+      - name: OSS Safety Check
+        uses: reversinglabs/gh-action-rl-protect-scan@v1
+        env:
+          RL_TOKEN: ${{ secrets.RL_COMMUNITY_TOKEN }}
+        with:        
+          scan-path: package.json
+          check-deps: release
+          report: oss-safety-report.json
+          log-file: rl-protect.log
+          log-level: warning
+          verbose: true
+
+      - name: Archive Report
+        if: success() || failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: OSS Safety Report
+          path: |
+            ./oss-safety-report.json
+            ./rl-protect.log
