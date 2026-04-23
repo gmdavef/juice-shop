@@ -20,7 +20,7 @@ jobs:
           scan-path: package.json
           scan-profile: baseline
           check-deps: release
-          concise: true
+          concise: false
           report: oss-safety-report.json
           log-file: rl-protect.log
           log-level: warning
